@@ -18,6 +18,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
@@ -35,9 +40,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ec.com.pablorcruh.indriveapp.R
+import ec.com.pablorcruh.indriveapp.presentation.components.DefaultTextField
 
 @Composable
 fun LoginScreen(){
@@ -135,28 +142,26 @@ fun LoginScreen(){
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(50.dp))
-                TextField(
+                DefaultTextField(
+                    modifier = Modifier,
                     value = email,
+                    label = "Email",
+                    icon = Icons.Outlined.Email,
                     onValueChange = {
                         email = it
                     },
-                    label = {
-                        Text(
-                            text = "email"
-                        )
-                    }
+                    keyboardType = KeyboardType.Email
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                TextField(
+                DefaultTextField(
+                    modifier = Modifier,
                     value = password,
+                    label = "Password",
+                    icon = Icons.Outlined.Lock,
                     onValueChange = {
                         password = it
                     },
-                    label = {
-                        Text(
-                            text = "password"
-                        )
-                    }
+                    hiddenText = true
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Box(modifier = Modifier.fillMaxWidth()){
