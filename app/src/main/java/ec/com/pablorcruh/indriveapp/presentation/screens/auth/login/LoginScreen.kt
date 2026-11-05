@@ -2,6 +2,7 @@ package ec.com.pablorcruh.indriveapp.presentation.screens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,11 +44,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import ec.com.pablorcruh.indriveapp.R
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultTextField
+import ec.com.pablorcruh.indriveapp.presentation.navigation.screen.auth.AuthScreen
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    navHostController: NavHostController
+){
 
     var email by remember{
         mutableStateOf("")
@@ -84,7 +89,11 @@ fun LoginScreen(){
                 )
                 Spacer(modifier = Modifier.height(150.dp))
                 Text(
-                    modifier = Modifier.rotate(90f).padding(top = 30.dp),
+                    modifier = Modifier.rotate(90f)
+                        .clickable{
+                            navHostController.navigate(route = AuthScreen.Register.route)
+                        }
+                        .padding(top = 30.dp),
                     text = "Register",
                     color = Color.White,
                     fontSize = 27.sp,
