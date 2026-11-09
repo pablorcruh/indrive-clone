@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ec.com.pablorcruh.indriveapp.R
+import ec.com.pablorcruh.indriveapp.presentation.components.DefaultButton
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultTextField
 import ec.com.pablorcruh.indriveapp.presentation.navigation.screen.auth.AuthScreen
 
@@ -173,22 +174,11 @@ fun LoginScreen(
                     hiddenText = true
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Box(modifier = Modifier.fillMaxWidth()){
-                    Button(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .width(250.dp)
-                            .height(55.dp),
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(Color.Black)
-                    ) {
-                        Text(
-                            text = "LOGIN",
-                            fontSize = 18.sp,
-                            color = Color.White
-                        )
-                    }
-                }
+                DefaultButton(
+                    modifier = Modifier,
+                    text = "LOGIN",
+                    onClick = {}
+                )
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -226,6 +216,9 @@ fun LoginScreen(
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
+                        modifier = Modifier.clickable{
+                            navHostController.navigate(route = AuthScreen.Register.route)
+                        },
                         text = "registrate",
                         color = Color.Black,
                         fontSize = 17.sp,
