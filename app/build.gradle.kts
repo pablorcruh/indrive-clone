@@ -8,6 +8,11 @@ android {
     compileSdk {
         version = release(37)
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 
     defaultConfig {
         applicationId = "ec.com.pablorcruh.indriveapp"
