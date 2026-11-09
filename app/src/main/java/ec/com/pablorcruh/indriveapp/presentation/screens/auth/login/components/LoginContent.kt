@@ -37,24 +37,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ec.com.pablorcruh.indriveapp.R
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultButton
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultTextField
 import ec.com.pablorcruh.indriveapp.presentation.navigation.screen.auth.AuthScreen
+import ec.com.pablorcruh.indriveapp.presentation.screens.auth.login.LoginViewModel
 
 @Composable
 fun LoginContent(
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ){
-    var email by remember{
-        mutableStateOf("")
-    }
 
-    var password by remember{
-        mutableStateOf("")
-    }
+    val viewModel : LoginViewModel = viewModel()
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -144,22 +142,22 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(50.dp))
             DefaultTextField(
                 modifier = Modifier,
-                value = email,
+                value = state.email,
                 label = "Email",
                 icon = Icons.Outlined.Email,
                 onValueChange = {
-                    email = it
+                    viewModel.onEmailInput(it)
                 },
                 keyboardType = KeyboardType.Email
             )
             Spacer(modifier = Modifier.height(20.dp))
             DefaultTextField(
                 modifier = Modifier,
-                value = password,
+                value = state.password,
                 label = "Password",
                 icon = Icons.Outlined.Lock,
                 onValueChange = {
-                    password = it
+                    viewModel.onPasswordInput(it)
                 },
                 hiddenText = true
             )
@@ -167,7 +165,9 @@ fun LoginContent(
             DefaultButton(
                 modifier = Modifier,
                 text = "LOGIN",
-                onClick = {}
+                onClick = {
+                    viewModel.onLoginSubmit()
+                }
             )
             Spacer(modifier = Modifier.height(20.dp))
             Row(
