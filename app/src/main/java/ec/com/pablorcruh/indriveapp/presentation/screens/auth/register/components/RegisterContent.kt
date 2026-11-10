@@ -1,5 +1,6 @@
 package ec.com.pablorcruh.indriveapp.presentation.screens.auth.register.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,52 +26,39 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ec.com.pablorcruh.indriveapp.R
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultButton
 import ec.com.pablorcruh.indriveapp.presentation.components.DefaultOutlinedTextField
+import ec.com.pablorcruh.indriveapp.presentation.screens.auth.register.RegisterViewModel
 
 @Composable
 fun RegisterContent(
     navHostController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModel: RegisterViewModel = hiltViewModel()
 ){
-    var name by remember{
-        mutableStateOf("")
-    }
+    val state = viewModel.state
 
-    var lastName by remember{
-        mutableStateOf("")
-    }
+    val context = LocalContext.current
 
-    var email by remember{
-        mutableStateOf("")
-    }
-
-    var phone by remember{
-        mutableStateOf("")
-    }
-
-    var password by remember{
-        mutableStateOf("")
-    }
-
-    var confimPassword by remember{
-        mutableStateOf("")
+    LaunchedEffect(key1 = viewModel.errorMessage) {
+        if(viewModel.errorMessage.isNotEmpty()){
+            Toast.makeText(context, viewModel.errorMessage, Toast.LENGTH_LONG).show()
+        }
     }
 
     Box(
@@ -147,63 +135,63 @@ fun RegisterContent(
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = name,
+                    value = state.name,
                     label = "Nombre",
                     icon = Icons.Outlined.Person,
                     onValueChange = {
-                        name = it
+                        viewModel.onNameInput(it)
                     }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = lastName,
+                    value = state.lastName,
                     label = "Apellido",
                     icon = Icons.Outlined.Person,
                     onValueChange = {
-                        lastName = it
+                        viewModel.onLastNameInput(it)
                     }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = email,
+                    value = state.email,
                     label = "Email",
                     icon = Icons.Outlined.Email,
                     onValueChange = {
-                        email = it
+                        viewModel.onEmailInput(it)
                     }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = phone,
+                    value = state.phone,
                     label = "Telefono",
                     icon = Icons.Outlined.Phone,
                     onValueChange = {
-                        phone = it
+                        viewModel.onPhoneInput(it)
                     },
                     keyboardType = KeyboardType.Email
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = password,
+                    value = state.password,
                     label = "Password",
                     icon = Icons.Outlined.Lock,
                     onValueChange = {
-                        password = it
+                        viewModel.onPasswordInput(it)
                     },
                     hiddenText = true
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 DefaultOutlinedTextField(
                     modifier = Modifier,
-                    value = confimPassword,
+                    value = state.confirmPassword,
                     label = "Repiie Password",
                     icon = Icons.Outlined.Lock,
                     onValueChange = {
-                        confimPassword = it
+                        viewModel.onConfirmPasswordInput(it)
                     },
                     hiddenText = true
                 )
